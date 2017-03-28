@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.moshe.chessadapters.MainActivity">
+
+    <!--<Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="select" />-->
+  <!--  <GridView
+        android:id="@+id/gvChess0"
+        android:tag="gvChess0"
+        style="@style/gridView" />
+    <GridView
+        android:id="@+id/gvChess1"
+        android:tag="gvChess1"
+        style="@style/gridView" />
+    <GridView
+        android:tag="gvChess2"
+        android:id="@+id/gvChess2"
+        style="@style/gridView"/>
+    <GridView
+        android:id="@+id/gvChess3"
+        android:tag="gvChess3" style="@style/gridView"/>
+    <GridView
+        android:id="@+id/gvChess4"
+        android:tag="gvChess4"
+        style="@style/gridView"/>
+    <GridView
+        android:id="@+id/gvChess5"
+        android:tag="gvChess5"
+        style="@style/gridView"/>
+    <GridView
+        android:id="@+id/gvChess6"
+        android:tag="gvChess6"
+        style="@style/gridView"/>
+    <GridView
+        android:id="@+id/gvChess7"
+        android:tag="gvChess7"
+        style="@style/gridView" />-->
+
+   <!-- <Button
+    android:id="@+id/squareButton1"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />-->
+
+
+    <!--<fragment
+        android:id="@+id/chessGridFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.moshe.chessadapters.ChessGridFragment"
+        tools:layout="@layout/fragment_chess_grid" />-->
+</GridLayout>
