@@ -4,49 +4,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton android:id="@+id/ib"
-        style="@style/imageButtons"
+    <ImageButton
+        android:id="@+id/ib"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/black_rectangle" />
- <!--   <ImageButton style="@style/imageButtons" android:src="@drawable/black_rectangle" />
-    <ImageButton style="@style/imageButtons" android:src="@drawable/gray_rectangle" />
-    <ImageButton style="@style/imageButtons" android:src="@drawable/gray_rectangle" />
-    <ImageButton style="@style/imageButtons" android:src="@drawable/gray_rectangle" />
-    <ImageButton style="@style/imageButtons" android:src="@drawable/gray_rectangle" />
-    <ImageButton style="@style/imageButtons" android:src="@drawable/white_rectangle" />
-    <ImageButton style="@style/imageButtons" android:src="@drawable/white_rectangle" />-->
-    <!--<ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton1" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton2" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton3" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton4" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton5" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton6" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/gray_rectangle"
-        android:id="@+id/imageButton7" />-->
+
 </LinearLayout>

@@ -1,250 +1,195 @@
-package com.example.moshe.chessrecycyler;
+package com.example.guest.adapters;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.media.Image;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AppCompatActivity;
+
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 
-import java.util.ArrayList;
-
-import static android.R.attr.button;
-import static android.R.attr.drawable;
+import com.example.guest.adapters.Fragments.ChessGridFragment;
+import com.example.guest.adapters.Fragments.ChessRecyclerFragment;
+import com.example.guest.adapters.Fragments.StudentsAdapterFragment;
+import com.example.guest.adapters.Fragments.StudentsNoAdapterFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private String color;
-    private int columnFrom, rowFrom, columnTo, rowTo;
-    private boolean isClickOnPiece = true;
-
-    RecyclerView recyclerView;
-    RecyclerViewAdapter rvAdapter;
-    ImageButton[][] buttons = new ImageButton[8][8];
+    private Fragment[] fragments = new Fragment[]{new StudentsNoAdapterFragment(), new StudentsAdapterFragment()
+            , new ChessGridFragment(), new ChessGridFragment(), new ChessRecyclerFragment()};
+  /*  private int[] buttonsResId = new int[]{R.id.button_students_no_adapter, R.id.button_students_adapter
+        , R.id.button_students_recycler, R.id.button_chess_grid, R.id.buttons_chess_recycler};
+*/
+    private Button[] buttons = new Button[5];
+    private PagerAdapter mPagerAdapter;
+    private ViewPager mViewPager;
+    //private FragmentTabHost mTabHost;
+    //private TabWidget tw;
+    //Button[] buttons = new Button[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rvColumn);
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                buttons[i][j] = new ImageButton(this);
-                //buttons[i][j].setLayoutParams(new GridView.LayoutParams(40, 40));
-                buttons[i][j].setId(i);
-                buttons[i][j].setBackgroundResource(android.R.drawable.btn_minus);
-
-                if (i < 2) {
-                    buttons[i][j].setImageDrawable(getResources().getDrawable(R.drawable.black_rectangle));
-                    buttons[i][j].setTag("black" + i + j);
-                } else if (i > 5) {
-                    buttons[i][j].setImageDrawable(getResources().getDrawable(R.drawable.white_rectangle));
-                    buttons[i][j].setTag("white" + i + j);
-                } else {
-                    buttons[i][j].setImageDrawable(getResources().getDrawable(R.drawable.gray_rectangle));
-                    buttons[i][j].setTag("empty" + i + j);
+        LinearLayout ll = (LinearLayout)findViewById(R.id.llTabs);
+        for (int i = 1; i < 6; i++) {
+            buttons[i - 1] = (Button) ll.findViewWithTag("btn" + i);
+            buttons[i - 1].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("tag0", v+":"+v.getTag()+":"+Integer.parseInt(v.getTag().toString().substring(3)));
+                    mViewPager.setCurrentItem(Integer.parseInt(v.getTag().toString().substring(3)) - 1);
                 }
-               /* buttons[i][j].setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e("tag1", v.getTag() + "");
-                        click(v);
-                    }
-                });
-               */ //Log.e("tag3", buttons[i][j].getTag() + "");
+            });
+        }
+
+        mViewPager = (ViewPager)findViewById(R.id.vp);
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mPagerAdapter);
+
+        /*mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.realTabContent);
+
+        tw = mTabHost.getTabWidget();
+        mTabHost.addTab(mTabHost.newTabSpec("a").setIndicator("Students1"), StudentsNoAdapterFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("b").setIndicator("Students2"), StudentsAdapterFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("c").setIndicator("Students3"), StudentsAdapterFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("d").setIndicator("Chess1"), ChessGridFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("e").setIndicator("Chess2"), ChessRecyclerFragment.class, null);
+        mTabHost.setCurrentTab(0);*/
+        setVPHeaderAppearance();
+
+        /*mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                mViewPager.setCurrentItem(mTabHost.getCurrentTab());
+                mTabHost.setCurrentTab(mTabHost.getCurrentTab());
+                //mPagerAdapter.notifyDataSetChanged();
+                setVPHeaderAppearance();
             }
+
+        *//* for (int i = 0; i < buttonsResId.length; i++)
+            buttons[i] = (Button)findViewById(buttonsResId[i]);*//*
+            //Log.e("tag", mPagerAdapter.getPageTitle(mPagerAdapter.)+"");
+
+        });*/
+
+    }
+
+    public void setVPHeaderAppearance() {
+        //tw.setBackgroundColor(getResources().getColor(R.color.orange));
+        //findViewById(R.id.llTabs).setBackgroundColor(getResources().getColor(R.color.orange));
+        //tw.setAlpha(.5f);
+        //tw.getChildAt(mTabHost.getCurrentTab()).setAlpha(.1f);
+        for (int i = 0; i < 5/*mViewPager.getChildCount()*/; i++) {
+            //Button v = (Button)buttons;
+            buttons[i]/*tw.getChildAt(i)*/.setAlpha(.5f);
+            if (i == mViewPager.getCurrentItem())//mTabHost.getCurrentTab())
+                buttons[i]/*tw.getChildAt(i)*/.setAlpha(1);
+            //v.setBackgroundColor(getResources().getColor(R.color.orange));
+            //buttons[i].setAlpha(1f);
+             /*   } else {
+                    buttons[i].setAlpha(.5f);
+                }*/
+        }
+    }
+
+/*    private void addTab(String labelId, String s, Class<?> frg) {
+        TabHost.TabSpec spec = mTabHost.newTabSpec(labelId);
+        spec.setIndicator(", d);
+        mTabHost.addTab(spec, frg, null);
+    }*/
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    /*public static class PlaceholderFragment extends Fragment {
+        *//**
+         * The fragment argument representing the section number for this
+         * fragment.
+         *//*
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
         }
 
-        StaggeredGridLayoutManager sglManager = new StaggeredGridLayoutManager(8, 1);
-        recyclerView.setLayoutManager(sglManager);//new GridLayoutManager(this, 8, GridLayoutManager.VERTICAL, false));
-        rvAdapter = new RecyclerViewAdapter(this, /*recyclerView,*/ getSupportFragmentManager(), buttons);
-        recyclerView.setAdapter(rvAdapter);
-        //rvAdapter.notifyDataSetChanged();
-
-
-
-
-        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 8);
-       /* recyclerView.setLayoutManager(new GridLayoutManager(this, 8, GridLayoutManager.VERTICAL, false));
-        //for (int i = 0; i < 8; i++) {
-            rvAdapter = new RecyclerViewAdapter(this, recyclerView, getSupportFragmentManager(), buttons);
-            //recyclerView.addView(buttons[1][1]);
-            recyclerView.setAdapter(rvAdapter);
-            rvAdapter.notifyDataSetChanged();
-        *///}
-    }
-
-    public void click(View v) {
-        String tag = v.getTag().toString();
-        Log.e("tag2", tag.substring(0,5)+":"+isClickOnPiece);
-
-        if (isClickOnPiece && tag.substring(0, 5) != "empty") {
-            color = tag.substring(0, 5);
-            columnFrom = Integer.parseInt(tag.substring(5, 6));
-            rowFrom = Integer.parseInt(tag.substring(6, 7));
-            Log.e("tag22", tag.substring(0,3));
-
-            //v.setTag(null);
-            isClickOnPiece = !isClickOnPiece;
-        } else if (!isClickOnPiece || tag.substring(0, 5) == "empty") {
-            columnTo = Integer.parseInt(tag.substring(5, 6));
-            rowTo = Integer.parseInt(tag.substring(6, 7));
-            Log.e("tag222", color+":"+columnFrom+":"+rowFrom+":"+columnTo+":"+rowTo);
-
-            v.setTag(color + columnTo + rowTo);
-            //buttons[columnFrom][rowFrom].setTag("empty" + columnFrom + rowFrom);
-            isClickOnPiece = !isClickOnPiece;
-            setBoard(color, columnFrom, rowFrom, columnTo, rowTo);
-        }
-        Log.e("tag11111", v.getTag().toString());
-
-    }
-
-    public void setBoard(String color, int columnFrom, int rowFrom, int columnTo, int rowTo) {
-        /*for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                //Log.e("tag111", buttons[i][j].getTag()+"");
-
-                switch (buttons[i][j].getTag().toString().substring(0, 5)) {
-                    case "white":
-                        buttons[i][j].setImageDrawable(getResources().getDrawable(R.drawable.white_rectangle));
-                        break;
-                    case "black":
-                        buttons[i][j].setImageDrawable(getResources().getDrawable(R.drawable.black_rectangle));
-                        break;
-                    case "empty":
-                        buttons[i][j].setImageDrawable(getResources().getDrawable(R.drawable.gray_rectangle));                }
-                //buttons[i][j].setTag("white" + i + j);
-            }
-            //Log.e("tag11", ((Button)gridView[i].getAdapter().getItem(i)).getTag()+"");
-
-            //gridView[i].setAdapter(new GridAdapter(this, buttons[i][j]));
-        }
-        *///rvAdapter = new RecyclerViewAdapter(this, getSupportFragmentManager(), buttons);
-        //recyclerView.setAdapter(rvAdapter);
-        //buttons[columnFrom][rowFrom];
-        switch (color){
-            case "white":
-                buttons[columnTo][rowTo].setImageDrawable(getResources()
-                        .getDrawable(R.drawable.white_rectangle));
-                break;
-            case "black":
-                buttons[columnTo][rowTo].setImageDrawable(getResources()
-                        .getDrawable(R.drawable.black_rectangle));
-        /*        break;
-            default:
-                buttons[columnTo][rowTo].setImageDrawable(getResources()
-                        .getDrawable(R.drawable.gray_rectangle));*/
-        }
-        buttons[columnFrom][rowFrom].setImageDrawable(getResources().getDrawable(
-                R.drawable.gray_rectangle));
-
-        rvAdapter.notifyItemChanged(columnFrom*8 + rowFrom);
-        rvAdapter.notifyItemChanged(columnTo*8 + rowTo);
-        Log.e("tag4", columnFrom*8 + rowFrom+":"+columnTo*8 + rowTo);
-    }
-
-}
-
-class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    //private ArrayList<Job> jobs;// = JobsStore.getInstance().getJobs();
-    private ImageButton[][] buttons;
-    //private RecyclerView mRecyclerView;
-int ii = 0;
-    private Context context;
-    FragmentManager fragmentManager;
-    private Resources res;
-    //int position;
-
-    public RecyclerViewAdapter(Context context/*, RecyclerView mRecyclerView*/
-            , FragmentManager fragmentManager, ImageButton[][] buttons/*, ArrayList<Job> jobs*/) {
-        this.context = context;
-        //this.mRecyclerView = mRecyclerView;
-        this.fragmentManager = fragmentManager;
-        this.buttons = buttons;
-        res = context.getResources();
-        //this.position = position;
-        //this.jobs = jobs;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        //ViewPager vp;
-        //RecyclerView recyclerView;
-        //private ImageButton[][] buttons = new ImageButton[8][8];
-        private ImageButton imageButton;
-        public ViewHolder(View v) {
-            super(v);
-
-            imageButton = (ImageButton)v.findViewById(R.id.ib);
-            imageButton.setOnClickListener(this);
-
-            Log.e("tag3", button+":"+":"+buttons[0][0].getTag()+":"+ii);
-
-                    if (ii < 16) {
-                        imageButton.setImageDrawable(res.getDrawable(R.drawable.black_rectangle));
-                        imageButton.setTag("black" + ii/8 + ii%8);
-                    } else if (ii > 47) {
-                        imageButton.setImageDrawable(res.getDrawable(R.drawable.white_rectangle));
-                        imageButton.setTag("white" + ii/8 + ii%8);
-                    } else {
-                        imageButton.setImageDrawable(res.getDrawable(R.drawable.gray_rectangle));
-                        imageButton.setTag("empty" + ii/8 + ii%8);
-                    }
-            Log.e("tag3", imageButton.getTag() + "");
-            ii++;
-            //ii = ii < 64? ii++ : 0;
+        *//**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         *//*
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
-        public void onClick(View view) {
-            //Toast.makeText(view.getContext(), "Clicked Position = ", Toast.LENGTH_SHORT).show();
-            ((MainActivity)context).click(view);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            return rootView;
         }
-    }
+    }*/
 
-    @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.image_button, null);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
-    }
+    public class PagerAdapter extends FragmentStatePagerAdapter {
 
-    @Override
-    public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, int position) {
-     /*   if (position < 16) {
-            holder.imageButton.setImageDrawable(res.getDrawable((R.drawable.black_rectangle)));
-        }else if(position > 47) {
-            holder.imageButton.setImageDrawable(res.getDrawable((R.drawable.white_rectangle)));
-        }else {
-            holder.imageButton.setImageDrawable(res.getDrawable((R.drawable.gray_rectangle)));
+        public PagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            //findViewById(buttonsResId[position]).setAlpha(.5f);
+            //setVPHeaderAppearance(position-1);
+            //mPagerAdapter.notifyDataSetChanged();
+            //mTabHost.setCurrentTab(position);
+            Log.e("tag1", position+":"+ mViewPager.getCurrentItem());//  mTabHost.getCurrentTab());
+
+            setVPHeaderAppearance();
+            return fragments[position];//PlaceholderFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_UNCHANGED;
+        }
+
+     /*   @Override
+        public int getItemPosition(Object object) {
+            return super.getItemPosition(object);
         }*/
-    }
 
-    @Override
-    public int getItemCount() {
-        return 64;
+   /*     @Override
+        public CharSequence getPageTitle(int position) {
+      *//*      switch (position) {
+                case 0:
+                    return "SECTION 1";
+                case 1:
+                    return "SECTION 2";
+                case 2:
+                    return "SECTION 3";
+            }*//*
+            return position+"";
+        }*/
+
     }
 }
