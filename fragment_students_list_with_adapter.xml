@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context="com.example.guest.adapters.Fragments.StudentsListFragment">
+
+    <ListView
+        android:id="@+id/lvWithAdapter"
+        android:layout_margin="@dimen/fab_margin"
+        android:dividerHeight="@dimen/activity_vertical_margin"
+        android:divider="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

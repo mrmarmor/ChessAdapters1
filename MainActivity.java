@@ -1,7 +1,6 @@
 package com.example.guest.adapters;
 
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -13,17 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TabHost;
-import android.widget.TabWidget;
 
 import com.example.guest.adapters.Fragments.ChessGridFragment;
 import com.example.guest.adapters.Fragments.ChessRecyclerFragment;
-import com.example.guest.adapters.Fragments.StudentsAdapterFragment;
+import com.example.guest.adapters.Fragments.StudentsListFragment;
 import com.example.guest.adapters.Fragments.StudentsNoAdapterFragment;
+import com.example.guest.adapters.Fragments.StudentsRecyclerFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private Fragment[] fragments = new Fragment[]{new StudentsNoAdapterFragment(), new StudentsAdapterFragment()
-            , new ChessGridFragment(), new ChessGridFragment(), new ChessRecyclerFragment()};
+    private Fragment[] fragments = new Fragment[]{new StudentsNoAdapterFragment(), new StudentsListFragment()
+            , new StudentsRecyclerFragment(), new ChessGridFragment(), new ChessRecyclerFragment()};
   /*  private int[] buttonsResId = new int[]{R.id.button_students_no_adapter, R.id.button_students_adapter
         , R.id.button_students_recycler, R.id.button_chess_grid, R.id.buttons_chess_recycler};
 */
@@ -60,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         tw = mTabHost.getTabWidget();
         mTabHost.addTab(mTabHost.newTabSpec("a").setIndicator("Students1"), StudentsNoAdapterFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("b").setIndicator("Students2"), StudentsAdapterFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("c").setIndicator("Students3"), StudentsAdapterFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("b").setIndicator("Students2"), StudentsListFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("c").setIndicator("Students3"), StudentsListFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("d").setIndicator("Chess1"), ChessGridFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("e").setIndicator("Chess2"), ChessRecyclerFragment.class, null);
         mTabHost.setCurrentTab(0);*/
